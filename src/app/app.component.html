@@ -1,0 +1,9 @@
+<app-navigator (navigate)="navigateTo($event)"></app-navigator>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+       <app-recipes *ngIf="recipes()"></app-recipes>
+       <app-shopping-list *ngIf="!recipes()"></app-shopping-list>
+    </div>
+  </div>
+</div>
