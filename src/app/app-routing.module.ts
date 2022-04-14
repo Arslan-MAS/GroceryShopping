@@ -12,7 +12,6 @@ const appRoutes: Routes = [
     {path :'' , component:RecipeStartComponent},
     {path:'new', component:RecipeEditComponent},
     {path :':id', component:RecipeDetailComponent},
-    
     {path:':id/edit',component:RecipeEditComponent }
   ] } ,// /recipes
   {path:"shoppingList" , component:ShoppingListComponent}, // /shoppingList

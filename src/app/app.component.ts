@@ -11,11 +11,6 @@ export class AppComponent {
     return this.displayRecipes ; 
   }
  
-  navigateTo(event){
-      if (event == "Recipes") {
-          this.displayRecipes =true;  
-      }else {
-        this.displayRecipes= false ;
-      }
-  }
+  
+  
 }

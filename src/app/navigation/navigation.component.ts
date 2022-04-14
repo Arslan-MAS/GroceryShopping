@@ -9,10 +9,5 @@ export class NavigationComponent{
     collapsed = true ;
 
     @Output () navigate = new EventEmitter <String> () ; 
-    onRecipesSelected(): void {
-        this.navigate.emit("Recipes");
-    }
-    onShoppingListSelected(): void {
-        this.navigate.emit("ShoppingList");
-    }
+   
 }
