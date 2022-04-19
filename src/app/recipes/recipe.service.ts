@@ -3,7 +3,8 @@ import { Subject } from "rxjs";
 import { Ingredient } from "../shared/ingredient.model";
 import { Recipe } from "./recipe.model";
 
-export class RecipeService {
+export class RecipeService  {
+    recipeTransmitter = new Subject<Recipe[]>();
     private recipes:Recipe []  =[
         new Recipe (
             'Tasty Schnitzel' ,
@@ -25,4 +26,23 @@ export class RecipeService {
     getRecipe (id: number) :Recipe{
         return this.recipes[id];
     } 
+    addRecipe ( recipe: Recipe ){
+        this.recipes.push(recipe);
+        this.recipeTransmitter.next(this.recipes.slice());
+    }
+    updateRecipe (index : number , updatedRecipe :Recipe){
+        this.recipes[index]= updatedRecipe;
+        
+        this.recipeTransmitter.next(this.recipes.slice());
+    }
+    addIngredientToRecipe (index : number , ingredient : Ingredient ){
+
+    }
+    deleteIngredientFromRecipe (index : number , ingredient :Ingredient ){
+
+    }
+    deleteRecipe (index : number){
+        this.recipes.splice(index,1);
+        this.recipeTransmitter.next(this.recipes.slice());
+    }
 }
