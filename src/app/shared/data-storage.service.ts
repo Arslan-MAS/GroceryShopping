@@ -22,20 +22,21 @@ export class DataStorageService {
          }));
     }
     loadRecipes () { 
-       return this.authService.user.pipe(take(1), exhaustMap (user=>{
-            return this.http.get <Recipe[]>("https://angularcourseproject-2e57e-default-rtdb.firebaseio.com/recipes.json",
-            {params: new HttpParams().set('auth',user.token)})
-
-        }),map(response=>{
+     
+        return this.http.get <Recipe[]>("https://angularcourseproject-2e57e-default-rtdb.firebaseio.com/recipes.json").pipe(map(response=>{
             return response.map(recipe=>{
                 return {...recipe,ingredients:recipe.ingredients? recipe.ingredients:[]}
-            })
-        }),tap(response=>{ 
+                })
+            }
+        ),
+        tap(response=>{ 
             
                 //console.log(response);
                 this.recipeService.setRecipes(response)
           
-        }))
+            }   
+            )
+        );
         
     }
 }

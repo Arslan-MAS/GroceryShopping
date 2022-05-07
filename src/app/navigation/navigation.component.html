@@ -18,7 +18,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li >
-                <a *ngIf="user!=null" style="cursor: pointer;">Logout</a></li>
+                <a *ngIf="user!=null" style="cursor: pointer;" (click)="onLogout()">Logout</a></li>
                 <li *ngIf="user!=null" style="cursor: pointer;" class="dropdown" appDropdown>
                     <a  class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
                     <ul class="dropdown-menu">

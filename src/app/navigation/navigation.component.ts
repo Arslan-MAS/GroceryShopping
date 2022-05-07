@@ -33,4 +33,7 @@ export class NavigationComponent implements OnInit , OnDestroy {
     onFetchData(){
         this.dataStorageService.loadRecipes().subscribe();
     }
+    onLogout(){{
+        this.authService.logout();
+    }}
 }
