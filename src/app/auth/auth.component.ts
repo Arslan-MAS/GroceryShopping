@@ -1,13 +1,12 @@
-import { isNull } from '@angular/compiler/src/output/output_ast';
+
 import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { PlaceHolderDirective } from '../shared/placeholder/placeholder.directive';
 import * as fromAppStore from '../store/app.reducer';
-import { AuthResponseData, AuthService } from './auth.service';
+import { AuthResponseData } from './auth.service';
 import * as AuthActions from './store/auth.actions';
 
 @Component({
@@ -22,7 +21,7 @@ export class AuthComponent implements OnInit , OnDestroy {
   @ViewChild(PlaceHolderDirective) alertHost :PlaceHolderDirective ;
   private storeSub :Subscription;
   private closeSub :Subscription;
-  constructor(private authService : AuthService, private router :Router,private componentFactoryResolver:ComponentFactoryResolver , private store : Store<fromAppStore.AppState>  ) {
+  constructor( private componentFactoryResolver:ComponentFactoryResolver , private store : Store<fromAppStore.AppState>  ) {
     
    }
 
