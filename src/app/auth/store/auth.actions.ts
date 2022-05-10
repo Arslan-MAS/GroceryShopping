@@ -9,7 +9,7 @@ export const CLEAR_ERROR= "CLEAR_ERROR";
 export const AUTO_LOGIN= "AUTO_LOGIN";
 export class Login implements Action {
     readonly type= AUTHENTICATION_SUCCEEDED ;
-    constructor (public payload :{ email :string , userId :string, token :string , date:Date}){
+    constructor (public payload :{ email :string , userId :string, token :string , date:Date , redirect:boolean}){
 
     } 
 }

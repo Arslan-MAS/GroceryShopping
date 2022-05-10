@@ -8,6 +8,8 @@ import  * as fromShoppingList from 'src/app/shopping-list/store/shoppinglist.red
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import * as fromApp from '../../store/app.reducer';
+import { map, switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-recipe-detail',
@@ -24,10 +26,38 @@ export class RecipeDetailComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params:Params)=>{
-      this.id=+params["id"];
-      this.recipe=this.recipeService.getRecipe(this.id);
+
+     this.route.params.pipe( 
+       map( (params)=>{
+       return +params['id']
+    }
+    ),switchMap((id)=>{
+      this.id= id ;
+      return this.store.select("recipes");
     })
+    ).pipe(map((responseRecipes)=>{
+      return responseRecipes.recipes.find((recipe,index)=>{
+        return index===this.id;
+      })
+    })).subscribe(
+      (recipe) =>{
+        this.recipe= recipe;
+      }
+    )
+
+
+    // this.route.params.subscribe((params:Params)=>{
+    //   this.id=+params["id"];
+    //   
+    //   this.store.select("recipes").pipe(map((response)=>{
+    //       return response.recipes.find((recipe,index)=>{
+    //         return index===this.id;
+
+    //       })
+    //   })).subscribe((recipe )=> {
+    //     this.recipe  =recipe;
+    //   })
+    // })
   }
   addToShoppingList(){
       this.store.dispatch(new AddIngredients(this.recipe.ingredients));

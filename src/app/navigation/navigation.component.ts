@@ -6,6 +6,7 @@ import { User } from "../auth/user.model";
 import { DataStorageService } from "../shared/data-storage.service";
 import { AppState } from "../store/app.reducer";
 import * as AuthActions from "../auth/store/auth.actions";
+import  * as RecipeActions from "../recipes/store/recipe.actions";
 
 @Component({
     selector:'app-navigator',
@@ -34,7 +35,7 @@ export class NavigationComponent implements OnInit , OnDestroy {
         this.dataStorageService.storeRecipes();
     }
     onFetchData(){
-        this.dataStorageService.loadRecipes().subscribe();
+        this.store.dispatch(new RecipeActions.FetchRecipes());
     }
     onLogout(){{
         

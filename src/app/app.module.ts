@@ -14,6 +14,7 @@ import { shoppingListReducer } from './shopping-list/store/shoppinglist.reducer'
 import { authReducer } from './auth/store/auth.reducer';
 import * as fromApp from './store/app.reducer';
 import { AuthEffects } from './auth/store/auth.effects';
+import { RecipeEffects } from './recipes/store/recipe.effects';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { AuthEffects } from './auth/store/auth.effects';
     CoreModule,
     AuthModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects,RecipeEffects]),
     
   
   ],

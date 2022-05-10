@@ -17,7 +17,7 @@ const handleAuthentication = ( email :string, id:string , token:string  ,expires
     localStorage.setItem('userData',JSON.stringify(user));
          return new AuthActions.Login({
         
-            email:email,userId:id,token:token,date:expirationDate
+            email:email,userId:id,token:token,date:expirationDate,redirect:true 
         
         });
  };
@@ -75,7 +75,9 @@ export class AuthEffects {
     @Effect({dispatch:false})
     authRedirect=this.actions$.pipe(
         ofType(AuthActions.AUTHENTICATION_SUCCEEDED),
-        tap(()=>{   
+        tap(
+            (payload:AuthActions.Login)=>{  
+            if (payload.payload.redirect===false ) 
             this.router.navigate(['/']);
 
         })
@@ -135,7 +137,8 @@ export class AuthEffects {
                         {   email :userData.email,
                             userId:userData.id,
                             token : userData._token,
-                            date :(new Date(userData._tokenExpirationDate))
+                            date :(new Date(userData._tokenExpirationDate)),
+                            redirect:true,
                         }
                             )
                     );

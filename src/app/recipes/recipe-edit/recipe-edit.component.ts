@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs/operators';
 import { Ingredient } from 'src/app/shared/ingredient.model';
+import { AppState } from 'src/app/store/app.reducer';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -14,7 +17,7 @@ export class RecipeEditComponent implements OnInit {
   id : number ;
   editMode = false ;
   recipeForm:FormGroup;
-  constructor(private router: Router, private route :ActivatedRoute,private recipeService:RecipeService) { }
+  constructor(private router: Router, private route :ActivatedRoute,private recipeService:RecipeService, private store :Store<AppState>) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params:Params)=>{
@@ -44,8 +47,12 @@ export class RecipeEditComponent implements OnInit {
     let recipeDescp = '';
     let recipeIngredients : FormArray = new FormArray([]) ;
     if (this.editMode ){
-
-      const recipe = this.recipeService.getRecipe(this.id);
+      var recipe ;
+      //const recipe = this.recipeService.getRecipe(this.id);
+      this.store.select('recipes').pipe(map(responseRecipes=>{
+        return  responseRecipes.recipes.find((recipe,index)=>
+         index===this.id);
+      })).subscribe(recipeCurrent=> recipe= recipeCurrent)
       recipeName = recipe.name;
       recipeDescp =recipe.description;
       recipeUrl= recipe.imagePath;
