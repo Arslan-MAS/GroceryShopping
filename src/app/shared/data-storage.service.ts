@@ -16,15 +16,15 @@ import { AppState } from "../store/app.reducer";
 })
 export class DataStorageService {
 
-    constructor(private authService :AuthService, private http  :HttpClient ,private recipeService :RecipeService , private store :Store <AppState>){
+    constructor(private authService :AuthService, private http  :HttpClient  , private store :Store <AppState>){
 
     }
 
     storeRecipes () {
-        const recipes = this.recipeService.getRecipes();
-         this.http.put("https://angularcourseproject-2e57e-default-rtdb.firebaseio.com/recipes.json",recipes).subscribe((response =>{ 
-             console.log(response);
-         }));
+        //const recipes = this.recipeService.getRecipes();
+        //  this.http.put("https://angularcourseproject-2e57e-default-rtdb.firebaseio.com/recipes.json",recipes).subscribe((response =>{ 
+        //      console.log(response);
+        //  }));
     }
     loadRecipes () { 
      

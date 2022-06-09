@@ -26,7 +26,37 @@ export class SetRecipes implements Action {
 export class FetchRecipes implements Action {
 
     readonly type: string = FETCH_RECIPES ; 
+    constructor (){
+        
+    }
     
     
 }
-export type RecipeActions = SetRecipes; 
+export class UpdateRecipe implements Action {
+   readonly type :string = UPDATE_RECIPE ;
+    constructor (public payload :{ index :number , newRecipe:Recipe }){
+
+    }
+}
+export class AddRecipe implements Action {
+     readonly type :string = ADD_RECIPE ;
+     constructor (public payload : Recipe ){
+
+     }
+
+}
+export class DeleteRecipe implements Action {
+    readonly type :string = DELETE_RECIPE  ;
+    constructor (public payload :number ){
+
+    }
+
+}
+export class StoreRecipes implements Action {
+    readonly type :string = STORE_RECIPES ;
+    constructor(){
+
+    }
+}
+
+export type RecipeActionsTypes = StoreRecipes|SetRecipes | FetchRecipes|DeleteRecipe |AddRecipe |UpdateRecipe ; 

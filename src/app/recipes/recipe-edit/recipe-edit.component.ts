@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { AppState } from 'src/app/store/app.reducer';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import * as RecipeActions from '../store/recipe.actions';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -17,7 +18,7 @@ export class RecipeEditComponent implements OnInit {
   id : number ;
   editMode = false ;
   recipeForm:FormGroup;
-  constructor(private router: Router, private route :ActivatedRoute,private recipeService:RecipeService, private store :Store<AppState>) { }
+  constructor(private router: Router, private route :ActivatedRoute, private store :Store<AppState>) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params:Params)=>{
@@ -35,9 +36,11 @@ export class RecipeEditComponent implements OnInit {
       
       //var recipe = new Recipe(name,description,imagePath,ingredients);
     if (this.editMode === true ){
-      this.recipeService.updateRecipe(this.id,this.recipeForm.value);
+      this.store.dispatch(new RecipeActions.UpdateRecipe({index:this.id,newRecipe:this.recipeForm.value}));
+      //this.recipeService.updateRecipe(this.id,this.recipeForm.value);
     }else {
-      this.recipeService.addRecipe(this.recipeForm.value);
+      this.store.dispatch(new RecipeActions.AddRecipe(this.recipeForm.value));
+      //this.recipeService.addRecipe(this.recipeForm.value);
     }
     this.onCancel();
   }
@@ -49,7 +52,7 @@ export class RecipeEditComponent implements OnInit {
     if (this.editMode ){
       var recipe ;
       //const recipe = this.recipeService.getRecipe(this.id);
-      this.store.select('recipes').pipe(map(responseRecipes=>{
+      this.store.select('recipes').pipe(take(1),map(responseRecipes=>{
         return  responseRecipes.recipes.find((recipe,index)=>
          index===this.id);
       })).subscribe(recipeCurrent=> recipe= recipeCurrent)

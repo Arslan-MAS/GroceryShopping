@@ -1,9 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
-import { AuthService } from "../auth/auth.service";
 import { User } from "../auth/user.model";
-import { DataStorageService } from "../shared/data-storage.service";
 import { AppState } from "../store/app.reducer";
 import * as AuthActions from "../auth/store/auth.actions";
 import  * as RecipeActions from "../recipes/store/recipe.actions";
@@ -18,7 +16,7 @@ export class NavigationComponent implements OnInit , OnDestroy {
     private authServiceSubscription :Subscription;
     public user :User;
     @Output () navigate = new EventEmitter <String> () ; 
-    constructor ( private dataStorageService :DataStorageService,private authService :AuthService, private store : Store<AppState> ){
+    constructor ( private store : Store<AppState> ){
 
     }
     ngOnInit(): void {
@@ -32,7 +30,8 @@ export class NavigationComponent implements OnInit , OnDestroy {
          this.authServiceSubscription.unsubscribe();
     }
     onSaveData(){
-        this.dataStorageService.storeRecipes();
+        this.store.dispatch(new RecipeActions.StoreRecipes());
+        //this.dataStorageService.storeRecipes();
     }
     onFetchData(){
         this.store.dispatch(new RecipeActions.FetchRecipes());

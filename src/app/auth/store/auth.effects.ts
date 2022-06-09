@@ -77,8 +77,8 @@ export class AuthEffects {
         ofType(AuthActions.AUTHENTICATION_SUCCEEDED),
         tap(
             (payload:AuthActions.Login)=>{  
-            if (payload.payload.redirect===false ) 
-            this.router.navigate(['/']);
+            if (payload.payload.redirect===true ) 
+                this.router.navigate(['/']);
 
         })
     );
@@ -138,7 +138,7 @@ export class AuthEffects {
                             userId:userData.id,
                             token : userData._token,
                             date :(new Date(userData._tokenExpirationDate)),
-                            redirect:true,
+                            redirect:false,
                         }
                             )
                     );

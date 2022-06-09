@@ -14,7 +14,7 @@ import { RecipeService } from '../recipe.service';
 export class RecipeListComponent implements OnInit , OnDestroy  {
   recipeSubscription :Subscription; 
   recipes : Recipe[];
-  constructor(private recipeService : RecipeService , private store :Store<AppState>) { }
+  constructor( private store :Store<AppState>) { }
   ngOnDestroy(): void {
     this.recipeSubscription.unsubscribe () ;
   }
